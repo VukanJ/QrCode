@@ -20,14 +20,7 @@ std::wstring Encoder::readFile(const char* filename)
 #else
 std::wstring Encoder::readFile(const char* filename)
 {
-	//std::string k("Hallo");
-	return std::wstring(L"Am Anfang schuf Gott Himmel und Erde. "
-                        "Und die Erde war wüst und leer, und es "
-												"war finster auf der Tiefe; und der Geist "
-												"Gottes schwebte auf dem Wasser.");
-
-
-//	return string_cast<std::wstring>(k);
+	
 }
 #endif
 

@@ -1,0 +1,11 @@
+This software follows the the
+"International Standard ISO/IEC 18004
+Information technology - Automatic identification and data capture techniques
+- Bar code symbology - QR Code"
+This standard can be found at
+http://www.swisseduc.ch/informatik/theoretische_informatik/qr_codes/docs/qr_standard.pdf
+
+Special thanks go to http://www.thonky.com/qr-code-tutorial/ for the in depth explanation
+of qr code creation
+
+-- VukanJ, April 10. 2016
