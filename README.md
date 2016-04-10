@@ -1,8 +1,8 @@
 # QrCode
 Simple Qr Code Generator
-Uses SFML window system for preview and image creation
+Uses SFML window system for preview and image creation.
 Does not yet support KANJI encoding.
-This software can be built on windows, the linux version still needs a reding
+This software can be built on windows, the linux version still needs a reading
 function
 
 # Usage
