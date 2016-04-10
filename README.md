@@ -7,6 +7,6 @@ function
 
 # Usage
 Write text into "input.txt", then run QrCode from the command line
-using one of the four error levels. Example: "./QrCode M" will create a qr code
+using one of the four error levels. Example: "./QRgen M" will create a qr code
 with error correction level M, and a preview window will appear.
 Press S to save.
