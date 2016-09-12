@@ -16,17 +16,17 @@
 class Encoder
 {
 public:
-	Encoder() = delete;
-	Encoder(qrInfo* inf);
-	std::wstring readFile(const char*);
-	void getEncoding(const char*);
-	void Encode(std::vector<bool>& dataFinal);
-	std::wstring read;
+								Encoder() = delete;
+								Encoder(qrInfo* inf);
+								std::wstring readFile(const char*);
+								void getEncoding(const char*);
+								void Encode(std::vector<bool>& dataFinal);
+								std::wstring read;
 private:
-	qrInfo* info;
-	std::vector<unsigned int> rawData;
-	std::vector<varNum> encoded;
-	varNum count_indicator;
+								qrInfo* info;
+								std::vector<unsigned int> rawData;
+								std::vector<varNum> encoded;
+								varNum count_indicator;
 };
 
 

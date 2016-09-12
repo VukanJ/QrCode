@@ -11,11 +11,11 @@
 class EC
 {
 public:
-	EC() = delete;
-	EC(qrInfo* inf);
-	void ErrorCorrection(std::vector<bool>&);
-	byteVec createErrorCode(byteVec&, int ecCount);
-	qrInfo* info;
+		EC() = delete;
+		EC(qrInfo* inf);
+		void ErrorCorrection(std::vector<bool>&);
+		byteVec createErrorCode(byteVec&, int ecCount);
+		qrInfo* info;
 
 };
 
