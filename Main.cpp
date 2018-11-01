@@ -12,18 +12,19 @@ int main(int argc, char* argv[])
 {
 	Err_Level err = _L_;
 	
-	if (argc != 2) {
+	if(argc != 2){
 		std::cerr << usageMsg << '\n';
 		return 1;
 	}
-	switch (argv[1][0]){
+	switch(argv[1][0]){
 		case 'L': case 'l': err = _L_; break;
 		case 'M': case 'm': err = _M_; break;
 		case 'Q': case 'q': err = _Q_; break;
 		case 'H': case 'h': err = _H_; break;
 		default: std::cerr << argv[1][0] << " is not a valid ec-level\n" << usageMsg << '\n'; return 1;
 	}
-	//
+	
+	// Compute QR Code
 	setupLogtable();
 	QR qr;
 	sf::Image qrImage = qr.create("input.txt", err);
@@ -37,7 +38,7 @@ int main(int argc, char* argv[])
 	// Create window
 	int qrSize = (21 + 8 + 4 * qr.getVersion());
 	sf::RenderWindow window(sf::VideoMode(qrSize*5, qrSize*5), "QR_Preview");
-	qr._reset_();
+	qr.reset();
 	window.setFramerateLimit(60);
 	window.setPosition(sf::Vector2i(1500, 300));
 
@@ -51,9 +52,14 @@ int main(int argc, char* argv[])
 			case sf::Event::KeyPressed:
 				switch (ev.key.code){
 					case sf::Keyboard::Escape:window.close(); break;
-					case sf::Keyboard::S:
-						window.capture().saveToFile("QRCode.Bmp");
+					case sf::Keyboard::S:{
+						// Producing QR output by taking screenshot
+						sf::Texture screenshot_tex;
+						screenshot_tex.update(window);
+						sf::Image screenshot = screenshot_tex.copyToImage();
+						screenshot.saveToFile("QRCode.Bmp");
 						return 0;
+					}
 					default: break;
 				} break;
 			case sf::Event::Resized:

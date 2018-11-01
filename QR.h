@@ -15,16 +15,15 @@ class QR final
 {
 public:
 	QR();
-	~QR();
 	sf::Image create(const char* dataFile, Err_Level);
 	int getVersion();
-	void _reset_(); // Resets all data
+	void reset(); // Resets all data
 	void test(sf::RenderWindow&); // Create all 160 different versions
 private:
-	Encoder* encoder;
-	EC* errorCoder;
-	MaskInfo* maskinfo;
-	Printer* printer;
+	Encoder encoder;
+	EC errorCoder;
+	MaskInfo maskinfo;
+	Printer printer;
 	
 	std::vector<bool> dataFinal; // full Data-String
 	std::vector<std::vector<QR_Module>> qr_field;

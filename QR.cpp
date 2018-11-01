@@ -1,31 +1,23 @@
 #include "QR.h"
 
-QR::QR()
+QR::QR() 
+	: encoder(&info), 
+      errorCoder(&info),
+	  maskinfo(&info),
+	  printer(&info)
 {
 	info.error_level = _UNDEF_;
 	info.version = -1;
-	encoder = new Encoder(&info);
-	errorCoder = new EC(&info);
-	maskinfo = new MaskInfo(&info);
-	printer = new Printer(&info);
 }
 
-QR::~QR()
-{
-	delete encoder;
-	delete errorCoder;
-	delete maskinfo;
-	delete printer;
-}
-
-void QR::_reset_()
+void QR::reset()
 {
 	info = qrInfo{};
-	encoder = new Encoder(&info);
-	errorCoder = new EC(&info);
-	maskinfo = new MaskInfo(&info);
-	printer = new Printer(&info);
-	qr_field = std::vector<std::vector<QR_Module>> {};
+	encoder = Encoder(&info);
+	errorCoder = EC(&info);
+	maskinfo = MaskInfo(&info);
+	printer = Printer(&info);
+	qr_field.clear();
 	qrCode = sf::Image{};
 	dataFinal.clear();
 }
@@ -43,14 +35,14 @@ sf::Image QR::create(const char* dataFile, Err_Level level)
 		default: std::cout << "Error: Unknown error level\n"; exit(1);
 	}
 	std::cout << "% recovery) ...\n";
-	encoder->getEncoding(dataFile);
-	encoder->Encode(dataFinal);
-	errorCoder->ErrorCorrection(dataFinal);
-	printer->printAllPatterns(qr_field);
-	maskinfo->fillData(dataFinal,qr_field);
-	maskinfo->maskEvaluate(qr_field);
-	//printer->printDebugFinal(qrCode,qr_field);
-	printer->printFinal(qrCode,qr_field);
+	encoder.getEncoding(dataFile);
+	encoder.Encode(dataFinal);
+	errorCoder.ErrorCorrection(dataFinal);
+	printer.printAllPatterns(qr_field);
+	maskinfo.fillData(dataFinal,qr_field);
+	maskinfo.maskEvaluate(qr_field);
+	//printer.printDebugFinal(qrCode,qr_field);
+	printer.printFinal(qrCode,qr_field);
 	return qrCode;
 }
 
@@ -63,7 +55,7 @@ void QR::test(sf::RenderWindow& window)
 	auto it = loop.begin();
 	for (int v = 0; v < 40; v++){
 		for (int Ec = 0; Ec < 4; Ec++){
-			_reset_(); 
+			reset(); 
 			msg.clear();
 			msg += startMsg; msg += L' ';
 			msg += std::to_wstring(v + 1);
@@ -78,15 +70,15 @@ void QR::test(sf::RenderWindow& window)
 				it = it+1 == loop.end() ? loop.begin() : ++it;
 				msg.push_back(*it);
 			}
-			encoder->read = msg;
+			encoder.read = msg;
 			info.encoding = ALPHANUM;
 			info.error_level = static_cast<Err_Level>(Ec);
-			encoder->Encode(dataFinal);
-			errorCoder->ErrorCorrection(dataFinal);
-			printer->printAllPatterns(qr_field);
-			maskinfo->fillData(dataFinal, qr_field);
-			maskinfo->maskEvaluate(qr_field);
-			printer->printFinal(qrCode, qr_field);
+			encoder.Encode(dataFinal);
+			errorCoder.ErrorCorrection(dataFinal);
+			printer.printAllPatterns(qr_field);
+			maskinfo.fillData(dataFinal, qr_field);
+			maskinfo.maskEvaluate(qr_field);
+			printer.printFinal(qrCode, qr_field);
 			//
 			sf::Texture qrTex;
 			qrTex.loadFromImage(qrCode);

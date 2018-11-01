@@ -4,9 +4,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cstdint>
 
-typedef unsigned char byte;
-typedef std::vector<byte> byteVec;
+using byte = uint8_t;
+using byteVec = std::vector<byte>;
 
 enum Encoding{
 	NUMERIC,
