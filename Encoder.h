@@ -7,6 +7,7 @@
 #endif
 #include <iostream>
 #include <fstream>
+#include <streambuf>
 
 #include "Data.h"
 #include "util.h"
@@ -18,8 +19,8 @@ class Encoder
 public:
 	Encoder() = delete;
 	Encoder(qrInfo* inf);
-	std::wstring readFile(const char*);
-	void getEncoding(const char*);
+	std::wstring readFile(const std::string&);
+	void getEncoding(const std::string&);
 	void Encode(std::vector<bool>& dataFinal);
 	std::wstring read;
 private:

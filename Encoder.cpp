@@ -4,7 +4,7 @@ Encoder::Encoder(qrInfo* inf) :info(inf){}
 
 #ifdef WIN_32
 #define
-std::wstring Encoder::readFile(const char* filename)
+std::wstring Encoder::readFile(const std::string& filename)
 {
 	const std::locale empty_locale;// = std::locale::empty();
 	typedef std::codecvt_utf8<wchar_t> converter_type;
@@ -18,30 +18,17 @@ std::wstring Encoder::readFile(const char* filename)
 	return input;
 }
 #else
-std::wstring Encoder::readFile(const char* filename)
+std::wstring Encoder::readFile(const std::string& filename)
 {
-	
+	std::wifstream file(filename, std::ios::in);
+	std::wstring str((std::istreambuf_iterator<wchar_t>(file)),
+					  std::istreambuf_iterator<wchar_t>());
+	return str;
 }
 #endif
 
-void Encoder::getEncoding(const char *fileName)
+void Encoder::getEncoding(const std::string& fileName)
 {
-	// Check if File exists
-	try{
-		std::ifstream exists;
-		exists.open(fileName, std::ios::in);
-		if (!exists.is_open())throw std::string("input file not found");
-		exists.close();
-	}
-	catch (const std::string& e){
-		std::cerr << e << '\n';
-		std::ofstream out;
-		out.open(fileName);
-		out.close();
-		std::cerr << fileName << " created, restart program\n";
-		exit(1);
-	}
-	//
 	read = readFile(fileName);
 	if(read[0] > 60e3)read.erase(read.begin());
 	// Set Encoding Type
