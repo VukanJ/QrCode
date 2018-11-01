@@ -12,8 +12,8 @@
 struct varNum
 {
 	varNum() : dat(0), len(0){};
-	varNum(unsigned short data, short lenght)
-		: dat(data), len(lenght){};
+	varNum(unsigned short data, short length)
+		: dat(data), len(length){};
 	unsigned short dat;
 	short len;
 };

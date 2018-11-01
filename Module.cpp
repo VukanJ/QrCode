@@ -29,7 +29,7 @@ void QR_Module::write(bool w, ModType t)
 	}
 }
 
-bool QR_Module::state()
+bool QR_Module::state() const
 {
 	return Color;
 }

@@ -48,6 +48,7 @@ sf::Image QR::create(const char* dataFile, Err_Level level)
 
 void QR::test(sf::RenderWindow& window)
 {
+	/*
 	window.setPosition(sf::Vector2i(0,0));
 	const std::wstring startMsg(L"QR ");
 	std::wstring msg;
@@ -91,6 +92,20 @@ void QR::test(sf::RenderWindow& window)
 			window.draw(qrSpr);
 			window.display();
 		}
+	}
+	*/
+}
+
+void QR::print() const 
+{
+	auto block = "██";
+	std::cout << '\n';
+	for(const auto& row : qr_field){
+		std::cout << block;
+		for(const auto& m : row){
+			std::cout << (m.state() ? "  " : block);
+		}
+		std::cout << block << '\n';
 	}
 }
 

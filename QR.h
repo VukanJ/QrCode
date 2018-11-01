@@ -19,6 +19,7 @@ public:
 	int getVersion();
 	void reset(); // Resets all data
 	void test(sf::RenderWindow&); // Create all 160 different versions
+	void print() const;
 private:
 	Encoder encoder;
 	EC errorCoder;

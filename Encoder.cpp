@@ -18,11 +18,12 @@ std::wstring Encoder::readFile(const std::string& filename)
 	return input;
 }
 #else
-std::wstring Encoder::readFile(const std::string& filename)
+std::string Encoder::readFile(const std::string& filename)
 {
-	std::wifstream file(filename, std::ios::in);
-	std::wstring str((std::istreambuf_iterator<wchar_t>(file)),
-					  std::istreambuf_iterator<wchar_t>());
+	std::ifstream file(filename, std::ios::in);
+	std::string str((std::istreambuf_iterator<char>(file)),
+					  std::istreambuf_iterator<char>());
+	std::cout << str << '\n';
 	return str;
 }
 #endif
@@ -30,8 +31,8 @@ std::wstring Encoder::readFile(const std::string& filename)
 void Encoder::getEncoding(const std::string& fileName)
 {
 	read = readFile(fileName);
-	if(read[0] > 60e3)read.erase(read.begin());
-	// Set Encoding Type
+	if(read[0] > 60e3) read.erase(read.begin());
+	// Set encoding type
 	info->encoding = NUMERIC;
 	for (auto& c : read){
 		if ((c >= 0x8140 && c <= 0x9FFC) || (c >= 0xE040 && c <= 0xEBBF)){
@@ -43,7 +44,9 @@ void Encoder::getEncoding(const std::string& fileName)
 				info->encoding = BYTE_ENC;
 				break;
 			}
-			else info->encoding = ALPHANUM;
+			else {
+				info->encoding = ALPHANUM;
+			}
 		}
 		else if (!isdigit(c)){
 			if (isAlphaNum(c)){
@@ -59,19 +62,22 @@ void Encoder::getEncoding(const std::string& fileName)
 
 void Encoder::Encode(std::vector<bool>& dataFinal)
 {
-	switch (info->encoding){
-	case BYTE_ENC:
-		std::cout << "Mode: Byte encoding\n";
-		for (auto& c : read) rawData.push_back(c); break;
-	case ALPHANUM:
-		std::cout << "Mode: Alphanumeric encoding\n";
-		for (auto& c : read) rawData.push_back(c2alpha(c)); break;
-	case NUMERIC:
-		std::cout << "Mode: Numeric encoding\n";
-		for (auto& c : read) rawData.push_back(c - 48); break;
-	case KANJI:
-		std::cout << "Mode: Kanji encoding\n";
-		for (auto& c : read) rawData.push_back(c); break;
+	rawData = std::vector<unsigned int>(std::begin(read), std::end(read)); 
+	switch(info->encoding){
+		case BYTE_ENC:
+			std::cout << "Mode: Byte encoding\n";
+			break;
+		case ALPHANUM:
+			std::cout << "Mode: Alphanumeric encoding\n";
+			for_each(std::begin(rawData), std::end(rawData), [](unsigned& c){c; });
+			break;
+		case NUMERIC:
+			std::cout << "Mode: Numeric encoding\n";
+			for_each(std::begin(rawData), std::end(rawData), [](unsigned& c){ c -= 48; });
+			break;
+		case KANJI:
+			std::cout << "Mode: Kanji encoding\n";
+			break;
 	}
 	read.clear();
 	// Choose smallest QR Version
@@ -83,10 +89,10 @@ void Encoder::Encode(std::vector<bool>& dataFinal)
 		std::cerr << "Input text too long. Try a shorter text or lower error level\n";
 		std::cerr << "Maximum length for encoding version 40-L ";
 		switch (info->encoding){
-		case BYTE_ENC:std::cout << "Byte Mode: 2953"; break;
-		case ALPHANUM:std::cout << "Alphanumeric: 4296"; break;
-		case NUMERIC:std::cout << "Numeric: 7089"; break;
-		case KANJI:std::cout << "Kanji: 1817"; break;
+			case BYTE_ENC:std::cout << "Byte Mode: 2953";    break;
+			case ALPHANUM:std::cout << "Alphanumeric: 4296"; break;
+			case NUMERIC:std::cout  << "Numeric: 7089";      break;
+			case KANJI:std::cout    << "Kanji: 1817";        break;
 		}
 		std::cout << " characters\nAborting ...\n";
 		exit(1);
@@ -96,11 +102,15 @@ void Encoder::Encode(std::vector<bool>& dataFinal)
 	std::cout << "Using Version " << info->version + 1;
 	std::printf(" [%d x %d] ...\n", info->size, info->size);
 	count_indicator.dat = dataSize;
-	if (info->version + 1 <= 9)
+	if (info->version + 1 <= 9){
 		count_indicator.len = indicator_len[0][info->encoding];
-	else if (info->version + 1 <= 26)
+	}
+	else if (info->version + 1 <= 26){
 		count_indicator.len = indicator_len[1][info->encoding];
-	else count_indicator.len = indicator_len[2][info->encoding];
+	}
+	else{
+		count_indicator.len = indicator_len[2][info->encoding];
+	}
 	std::cout << "Count Indicator -> " << count_indicator << '\n';
 
 	i = 0;
@@ -108,8 +118,8 @@ void Encoder::Encode(std::vector<bool>& dataFinal)
 		for (auto it = rawData.begin(); it != rawData.end();){
 			encoded.push_back(varNum(0, 10));
 			if (rawData.size() >= 3){
-				encoded[i].dat += (*it) * 100; it = rawData.erase(it);
-				encoded[i].dat += (*it) * 10;  it = rawData.erase(it);
+				encoded[i].dat += (*it)*100; it = rawData.erase(it);
+				encoded[i].dat += (*it)*10;  it = rawData.erase(it);
 				encoded[i].dat += (*it);     it = rawData.erase(it);
 				i++;
 			}
@@ -166,10 +176,10 @@ void Encoder::Encode(std::vector<bool>& dataFinal)
 	}
 	// Data string assembly
 	switch (info->encoding){
-	case BYTE_ENC: pushBits(0x4, dataFinal, 4); break;
-	case ALPHANUM: pushBits(0x2, dataFinal, 4); break;
-	case NUMERIC: pushBits(0x1, dataFinal, 4); break;
-	case KANJI: pushBits(0x8, dataFinal, 4); break;
+		case BYTE_ENC: pushBits(0x4, dataFinal, 4); break;
+		case ALPHANUM: pushBits(0x2, dataFinal, 4); break;
+		case NUMERIC:  pushBits(0x1, dataFinal, 4); break;
+		case KANJI:    pushBits(0x8, dataFinal, 4); break;
 	}
 	pushBits(count_indicator.dat, dataFinal, count_indicator.len);
 	for (auto& enc : encoded)

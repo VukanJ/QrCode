@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ctime>
+#include <algorithm>
 
 #include "QR.h"
 #include "Data.h"
@@ -28,6 +29,7 @@ int main(int argc, char* argv[])
 	setupLogtable();
 	QR qr;
 	sf::Image qrImage = qr.create("input.txt", err);
+	qr.print();
 	std::cout << "\t~~~~DONE~~~~\n\tPress S to Save\nResize code by resizing window\n";
 	// SetUp Sprite
 	sf::Texture qrTex;
@@ -42,39 +44,35 @@ int main(int argc, char* argv[])
 	window.setFramerateLimit(60);
 	window.setPosition(sf::Vector2i(1500, 300));
 
-	bool doneResize = true;
-
 	while (window.isOpen()){
 		sf::Event ev;
 		while (window.pollEvent(ev)){
 			switch (ev.type){
-			case sf::Event::Closed: window.close(); break;
-			case sf::Event::KeyPressed:
-				switch (ev.key.code){
-					case sf::Keyboard::Escape:window.close(); break;
-					case sf::Keyboard::S:{
-						// Producing QR output by taking screenshot
-						sf::Texture screenshot_tex;
-						screenshot_tex.update(window);
-						sf::Image screenshot = screenshot_tex.copyToImage();
-						screenshot.saveToFile("QRCode.Bmp");
-						return 0;
-					}
-					default: break;
-				} break;
-			case sf::Event::Resized:
-				if(!doneResize){
-					unsigned int size = std::min(window.getSize().x, window.getSize().y);
+				case sf::Event::Closed: window.close(); break;
+				case sf::Event::KeyPressed:
+					switch (ev.key.code){
+						case sf::Keyboard::Escape:window.close(); break;
+						case sf::Keyboard::S:{
+							// Producing QR output by taking screenshot
+							sf::Texture screenshot_tex;
+							screenshot_tex.update(window);
+							sf::Image screenshot = screenshot_tex.copyToImage();
+							screenshot.saveToFile("QRCode.bmp");
+							window.close();
+							return 0;
+						}
+						default: break;
+					} break;
+				case sf::Event::Resized:
+					auto size = std::min(window.getSize().x, window.getSize().y);
 					size -= size%qrSize;
-					window.setSize(sf::Vector2u(size,size));
-					std::cout << "resized";
-					doneResize = true;
-				}
-				break;
-			default: break;
+					size = std::max<int>(size, qrSize);
+					std::cout << "." << std::flush;
+					//window.create(sf::VideoMode(800, 600), "My window");
+					//window.setSize(sf::Vector2u(size,size));
+					break;
 			}
 		}
-		doneResize = false;
 		window.clear(sf::Color::Blue);
 		window.draw(qrSpr);
 		window.display();

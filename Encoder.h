@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <streambuf>
+#include <algorithm>
 
 #include "Data.h"
 #include "util.h"
@@ -19,10 +20,10 @@ class Encoder
 public:
 	Encoder() = delete;
 	Encoder(qrInfo* inf);
-	std::wstring readFile(const std::string&);
+	std::string readFile(const std::string&);
 	void getEncoding(const std::string&);
 	void Encode(std::vector<bool>& dataFinal);
-	std::wstring read;
+	std::string read;
 private:
 	qrInfo* info;
 	std::vector<unsigned int> rawData;

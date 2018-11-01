@@ -10,7 +10,7 @@ public:
 	void write(bool, ModType);
 	void write_lock(bool, ModType);
 	bool isLocked();
-	bool state();
+	bool state() const;
 	void unlock();
 	ModType type;
 private:
