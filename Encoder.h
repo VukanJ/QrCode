@@ -1,10 +1,7 @@
 #ifndef ENCODER_H
 #define ENCODER_H
 
-#ifdef WIN_32
-#define
-	#include <codecvt>
-#endif
+
 #include <iostream>
 #include <fstream>
 #include <streambuf>

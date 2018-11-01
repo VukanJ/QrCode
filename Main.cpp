@@ -11,25 +11,24 @@ extern void setupLogtable();
 
 int main(int argc, char* argv[])
 {
+	init_parameters initparams;
+  	initparams.parse(argc, argv);
+
 	Err_Level err = _L_;
 	
-	if(argc != 2){
-		std::cerr << usageMsg << '\n';
-		return 1;
-	}
-	switch(argv[1][0]){
-		case 'L': case 'l': err = _L_; break;
-		case 'M': case 'm': err = _M_; break;
-		case 'Q': case 'q': err = _Q_; break;
-		case 'H': case 'h': err = _H_; break;
+	switch(initparams.eclevel){
+		case 1: err = _L_; break;
+		case 2: err = _M_; break;
+		case 3: err = _Q_; break;
+		case 4: err = _H_; break;
 		default: std::cerr << argv[1][0] << " is not a valid ec-level\n" << usageMsg << '\n'; return 1;
 	}
 	
 	// Compute QR Code
 	setupLogtable();
 	QR qr;
-	sf::Image qrImage = qr.create("input.txt", err);
-	qr.print();
+	sf::Image qrImage = qr.create(initparams.inputfile, err);
+	//qr.print();
 	std::cout << "\t~~~~DONE~~~~\n\tPress S to Save\nResize code by resizing window\n";
 	// SetUp Sprite
 	sf::Texture qrTex;

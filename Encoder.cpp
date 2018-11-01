@@ -2,22 +2,6 @@
 
 Encoder::Encoder(qrInfo* inf) :info(inf){}
 
-#ifdef WIN_32
-#define
-std::wstring Encoder::readFile(const std::string& filename)
-{
-	const std::locale empty_locale;// = std::locale::empty();
-	typedef std::codecvt_utf8<wchar_t> converter_type;
-	const converter_type* converter = new converter_type;
-	const std::locale utf8_locale = std::locale(empty_locale, converter);
-	std::wifstream stream(L"input.txt");
-	stream.imbue(utf8_locale);
-	std::wstring line,input;
-	std::getline(stream, line); input = line;
-	while(std::getline(stream, line))input+=L'\n'+line;
-	return input;
-}
-#else
 std::string Encoder::readFile(const std::string& filename)
 {
 	std::ifstream file(filename, std::ios::in);
@@ -26,7 +10,6 @@ std::string Encoder::readFile(const std::string& filename)
 	std::cout << str << '\n';
 	return str;
 }
-#endif
 
 void Encoder::getEncoding(const std::string& fileName)
 {

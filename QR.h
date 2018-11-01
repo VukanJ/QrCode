@@ -15,7 +15,7 @@ class QR final
 {
 public:
 	QR();
-	sf::Image create(const char* dataFile, Err_Level);
+	sf::Image create(const std::string& dataFile, Err_Level);
 	int getVersion();
 	void reset(); // Resets all data
 	void test(sf::RenderWindow&); // Create all 160 different versions

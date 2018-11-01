@@ -9,6 +9,46 @@
 #define DEBUG(code)
 #endif
 
+#include <boost/program_options.hpp>
+
+namespace po = boost::program_options;
+
+struct init_parameters
+{
+  std::string inputfile;
+  int eclevel;
+
+  void parse(int argc, char* argv[]){
+    // Loading command line arguments...
+    po::options_description desc("Supported options");
+    desc.add_options()
+      ("help", "show this list")
+      ("f", po::value<std::string>(&inputfile), "Input file")
+      ("ec", po::value<int>(&eclevel), "EC level");
+	po::positional_options_description pod;
+    pod.add("f", -1);
+	po::variables_map vm;
+    po::store(po::command_line_parser(argc, argv).options(desc).positional(pod).run(), vm);
+    po::notify(vm);
+
+    // Help
+    if(vm.count("help")){
+      std::cout << desc << '\n';
+      exit(0);
+    }
+    // Input file
+    if(!vm.count("f")){
+      std::cerr << "\t[Error]: An input file must be specified!\n" << desc << '\n';
+      exit(1);
+    }
+    else{
+      std::cout << "Input = " << inputfile << '\n';
+    }
+  }
+
+};
+
+
 struct varNum
 {
 	varNum() : dat(0), len(0){};
