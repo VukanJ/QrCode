@@ -46,11 +46,11 @@ void EC::ErrorCorrection(std::vector<bool>& dataFinal)
 	// TEST OUT (DEBUG)
 	DEBUG(
 	std::cout << "\tEC INFO\n";
-	std::cout << "Blocks in first group " << blockCount_1 << std::endl;
-	std::cout << "Blocks in second group " << blockCount_2 << std::endl;
-	std::cout << "Needed EC Words " << errorCount << std::endl;
-	std::cout << "DataLength in first group " << dataLen_1 << std::endl;
-	std::cout << "DataLength in second group " << dataLen_2 << std::endl;)
+	std::cout << "Blocks in first group " << blockCount_1 << '\n';
+	std::cout << "Blocks in second group " << blockCount_2 << '\n';
+	std::cout << "Needed EC Words " << errorCount << '\n';
+	std::cout << "DataLength in first group " << dataLen_1 << '\n';
+	std::cout << "DataLength in second group " << dataLen_2 << '\n';)
 	//
 
 	byteVec interlData, interlError;
@@ -79,7 +79,7 @@ void EC::ErrorCorrection(std::vector<bool>& dataFinal)
 	std::cout << "\nEC: \n";
 	for (auto& d : interlError)
 		std::cout << (int)d << ' ';
-	std::cout << std::endl;
+	std::cout << '\n';
 	)
 	// Add to final Data
 	for (auto& data : interlData)
@@ -96,7 +96,7 @@ void EC::ErrorCorrection(std::vector<bool>& dataFinal)
 		pushBits(0x0, dataFinal, 4);
 	//std::cout << "RAW BITS\n";
 	//printLongBit(dataFinal);
-	//std::cout << "BITCOUNT " << dataFinal.size() << std::endl;
+	//std::cout << "BITCOUNT " << dataFinal.size() << '\n';
 }
 
 byteVec EC::createErrorCode(byteVec& message, int ecCount)

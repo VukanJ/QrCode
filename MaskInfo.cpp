@@ -176,7 +176,7 @@ void MaskInfo::maskEvaluate(QR_Field& qr_field)
 	}
 	//std::cout << "Penalties: \n";
 	//for (int p = 0; p < 8; p++)
-	//	std::cout << p << ' ' << penalty[p] << std::endl;
+	//	std::cout << p << ' ' << penalty[p] << '\n';
 	// Apply best Mask
 	int best = penalty[0], ind = 0;
 	for (int i = 1; i < 7; i++)
@@ -184,7 +184,7 @@ void MaskInfo::maskEvaluate(QR_Field& qr_field)
 			best = penalty[i];
 			ind = i;
 		}
-	std::cout << "Mask pattern " << ind << std::endl;
+	std::cout << "Mask pattern " << ind << '\n';
 	applyMask(qr_field,ind);
 }
 
@@ -216,7 +216,7 @@ void MaskInfo::genVersionInfo()
 	DEBUG(
 	for (auto f : versionInfo)
 		std::cout << (f ? 1 : 0);
-	std::cout << std::endl;)
+	std::cout << '\n';)
 }
 
 void MaskInfo::genFormatInfo()
@@ -272,6 +272,6 @@ void MaskInfo::genFormatInfo()
 	for (auto f : F){
 	std::cout << (f ? 1 : 0);
 	}
-	std::cout << std::endl;
+	std::cout << '\n';
 	})
 }

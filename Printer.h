@@ -7,7 +7,7 @@
 #include "util.h"
 #include "Module.h"
 
-typedef std::vector<std::vector<QR_Module>> QR_Field;
+using QR_Field = std::vector<std::vector<QR_Module>>;
 
 class Printer
 {

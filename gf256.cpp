@@ -40,7 +40,7 @@ unsigned short gf256::calcExpo(int p)
 	return _val;
 }
 
-void setupLog()
+void setupLogtable()
 {
 	int val = 0;
 	gf256 gf;

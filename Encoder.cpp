@@ -34,11 +34,11 @@ void Encoder::getEncoding(const char *fileName)
 		exists.close();
 	}
 	catch (const std::string& e){
-		std::cerr << e << std::endl;
+		std::cerr << e << '\n';
 		std::ofstream out;
 		out.open(fileName);
 		out.close();
-		std::cerr << fileName << " created, restart program" << std::endl;
+		std::cerr << fileName << " created, restart program\n";
 		exit(1);
 	}
 	//
@@ -89,11 +89,11 @@ void Encoder::Encode(std::vector<bool>& dataFinal)
 	read.clear();
 	// Choose smallest QR Version
 	unsigned short dataSize = rawData.size();
-	std::cout << "Data length: " << dataSize << std::endl;
+	std::cout << "Data length: " << dataSize << '\n';
 	int i = 0;
 	while (i < 40 && versionSize[4 * i + info->error_level][info->encoding] < dataSize) i++;
 	if (i >= 40){
-		std::cerr << "Input text too long. Try a shorter text or lower error level" << std::endl;
+		std::cerr << "Input text too long. Try a shorter text or lower error level\n";
 		std::cerr << "Maximum length for encoding version 40-L ";
 		switch (info->encoding){
 		case BYTE_ENC:std::cout << "Byte Mode: 2953"; break;
@@ -114,7 +114,7 @@ void Encoder::Encode(std::vector<bool>& dataFinal)
 	else if (info->version + 1 <= 26)
 		count_indicator.len = indicator_len[1][info->encoding];
 	else count_indicator.len = indicator_len[2][info->encoding];
-	std::cout << "Count Indicator -> " << count_indicator << std::endl;
+	std::cout << "Count Indicator -> " << count_indicator << '\n';
 
 	i = 0;
 	if (info->encoding == NUMERIC){
@@ -139,8 +139,8 @@ void Encoder::Encode(std::vector<bool>& dataFinal)
 			}
 		}
 		/*for(auto& enc : encoded)
-			std::cout << enc << std::endl;
-		std::cout << std::endl;*/
+			std::cout << enc << '\n';
+		std::cout << '\n';*/
 	}
 	else if (info->encoding == ALPHANUM){
 		for (auto it = rawData.begin(); it != rawData.end();){
@@ -158,8 +158,8 @@ void Encoder::Encode(std::vector<bool>& dataFinal)
 			}
 		}
 		/*for(auto& enc : encoded)
-			std::cout << enc << std::endl;
-		std::cout << std::endl;*/
+			std::cout << enc << '\n';
+		std::cout << '\n';*/
 	}
 	else if (info->encoding == BYTE_ENC){
 		for (auto it = rawData.begin(); it != rawData.end();it++)
@@ -201,7 +201,7 @@ void Encoder::Encode(std::vector<bool>& dataFinal)
 		pushBits(0, dataFinal, lengthRequired - dataFinal.size());
 	rawData.clear();
 	// encoded still needed for message polynomial
-	DEBUG(std::cout << "Required length: " << lengthRequired << std::endl;
-	std::cout << "Curret size: " << dataFinal.size() << std::endl;)
+	DEBUG(std::cout << "Required length: " << lengthRequired << '\n';
+	std::cout << "Curret size: " << dataFinal.size() << '\n';)
 	//printLongBit(dataFinal);
 }

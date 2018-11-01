@@ -149,8 +149,6 @@ static const std::vector<std::vector<byte>> alignmentDat = {
 	{ 6, 30, 54, 78, 102, 126, 150 }, { 6, 24, 50, 76, 102, 128, 154 }, { 6, 28, 54, 80, 106, 132, 158 }, { 6, 32, 58, 84, 110, 136, 162 }, { 6, 26, 54, 82, 110, 138, 166 }, { 6, 30, 58, 86, 114, 142, 170 }
 };
 
-const std::string usageMsg =
-"Usage: QR <ec-level>\n"
-"Error Correction-Levels:{ L M Q H }\n";
+const std::string usageMsg ="Usage: QR <ec-level>\nError Correction-Levels:{ L M Q H }\n";
 
 #endif

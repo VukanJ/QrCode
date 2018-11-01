@@ -36,11 +36,11 @@ sf::Image QR::create(const char* dataFile, Err_Level level)
 	info.error_level = level;
 	std::cout << "Using error correction level ";
 	switch (info.error_level){
-	case _L_:std::cout << "L (7"; break;
-	case _M_:std::cout << "M (15"; break;
-	case _Q_:std::cout << "Q (25"; break;
-	case _H_:std::cout << "H (30"; break;
-	default: std::cout << "Error: Unknown error level" << std::endl; throw;
+		case _L_:std::cout << "L (7"; break;
+		case _M_:std::cout << "M (15"; break;
+		case _Q_:std::cout << "Q (25"; break;
+		case _H_:std::cout << "H (30"; break;
+		default: std::cout << "Error: Unknown error level\n"; exit(1);
 	}
 	std::cout << "% recovery) ...\n";
 	encoder->getEncoding(dataFile);

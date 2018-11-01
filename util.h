@@ -30,15 +30,15 @@ namespace{
 	byte c2alpha(const char t)
 	{
 		switch (t){
-		case ' ':return 36;
-		case '$':return 37;
-		case '%':return 38;
-		case '*':return 39;
-		case '+':return 40;
-		case '-':return 41;
-		case '.':return 42;
-		case '/':return 43;
-		case ':':return 44;
+			case ' ': return 36;
+			case '$': return 37;
+			case '%': return 38;
+			case '*': return 39;
+			case '+': return 40;
+			case '-': return 41;
+			case '.': return 42;
+			case '/': return 43;
+			case ':': return 44;
 		}
 		if (isdigit(t)) return t - 48;
 		if (isupper(t))
@@ -51,24 +51,24 @@ namespace{
 		int i = 0;
 		for (auto b : vec){
 			std::cout << (b ? 1 : 0);
-			if (++i % 8 == 0)std::cout << ' ';
+			if (++i % 8 == 0) std::cout << ' ';
 		}
-		std::cout << std::endl;
+		std::cout << '\n';
 	}
 
-	void pushBits(unsigned int data, std::vector<bool>& vec, int amount)
+	void pushBits(unsigned data, std::vector<bool>& vec, int amount)
 	{
-		for (unsigned int p = (unsigned int)0x1 << (amount - 1); p; p >>= 1)
+		for (unsigned p = 0x1U << (amount - 1); p; p >>= 1)
 			vec.push_back(p & data ? true : false);
 	}
 
 	template<typename C> bool isAlphaNum(C t)
 	{
-		if (t > 255)return false;
+		if (t > 255) return false;
 		switch (t){
-		case ' ':case '$':case '%':case '*':
-		case '+':case '-':case '.':case '/':
-		case ':':return true;
+			case ' ': case '$': case '%': case '*':
+			case '+': case '-': case '.': case '/':
+			case ':': return true;
 		default:
 			if (isdigit(t)) return true;
 			if (isupper(t) && isalpha(t))
@@ -81,7 +81,7 @@ namespace{
 	{
 		for (T p = (T)0x1 << (sizeof(data) * 8 - 1); p; p >>= 1)
 			std::cout << (p&data ? 1 : 0);
-		std::cout << std::endl;
+		std::cout << '\n';
 	}
 
 	std::ostream& operator<<(std::ostream& stream, varNum& num)
