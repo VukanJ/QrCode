@@ -7,13 +7,15 @@ std::string Encoder::readFile(const std::string& filename)
 	std::ifstream file(filename, std::ios::in);
 	std::string str((std::istreambuf_iterator<char>(file)),
 					  std::istreambuf_iterator<char>());
-	std::cout << str << '\n';
 	return str;
 }
 
 void Encoder::getEncoding(const std::string& fileName)
-{
+{	
 	read = readFile(fileName);
+	std::cout << "Encoding the following information:\n";
+	std::cout << read << '\n';
+
 	if(read[0] > 60e3) read.erase(read.begin());
 	// Set encoding type
 	info->encoding = NUMERIC;
@@ -52,7 +54,7 @@ void Encoder::Encode(std::vector<bool>& dataFinal)
 			break;
 		case ALPHANUM:
 			std::cout << "Mode: Alphanumeric encoding\n";
-			for_each(std::begin(rawData), std::end(rawData), [](unsigned& c){c; });
+			for_each(std::begin(rawData), std::end(rawData), [](unsigned& c){ c2alpha(c); });
 			break;
 		case NUMERIC:
 			std::cout << "Mode: Numeric encoding\n";

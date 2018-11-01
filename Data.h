@@ -24,24 +24,22 @@ enum Err_Level{
 	_UNDEF_ // Not yet specified
 };
 
-enum ModType{
-	M_VOID,
-	M_DATA,
-	M_TIMING,
-	M_FINDER,
-	M_SEP,
-	M_ALIGN,
-	M_DARK_MODULE,
-	M_VERSION,
-	M_FORMAT
-};
-
 static const byteVec finder_dat = {
-	0x7F, 0x41, 0x5D, 0x5D, 0x5D, 0x41, 0x7F
+	0b1111111,
+	0b1000001,
+	0b1011101,
+	0b1011101,
+	0b1011101,
+	0b1000001,
+	0b1111111
 };
 
 static const byteVec align_dat = {
-	0x1F, 0x11, 0x15, 0x11, 0x1F
+	0b11111,
+	0b10001,
+	0b10101,
+	0b10001,
+	0b11111
 };
 
 static const std::vector<byteVec> indicator_len = { { 10, 9, 8, 8 }, { 12, 11, 16, 10 }, { 14, 13, 16, 12 } };

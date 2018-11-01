@@ -41,8 +41,8 @@ sf::Image QR::create(const std::string& dataFile, Err_Level level)
 	printer.printAllPatterns(qr_field);
 	maskinfo.fillData(dataFinal,qr_field);
 	maskinfo.maskEvaluate(qr_field);
-	//printer.printDebugFinal(qrCode,qr_field);
-	printer.printFinal(qrCode,qr_field);
+	printer.printDebugFinal(qrCode,qr_field);
+	//printer.printFinal(qrCode,qr_field);
 	return qrCode;
 }
 

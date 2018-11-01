@@ -2,39 +2,39 @@
 
 QR_Module::QR_Module()
 {
-	Color = false;
+	Color  = false;
 	locked = false;
-	type = M_VOID;
+	type   = M_VOID;
 }
 
-bool QR_Module::isLocked()
+void QR_Module::write(bool w, ModType t) noexcept
+{
+	if (!locked){
+		Color = w;
+		type  = t;
+	}
+}
+
+void QR_Module::write_lock(bool w, ModType t) noexcept
+{
+	if (!locked){
+		Color  = w;
+		locked = true;
+		type   = t;
+	}
+}
+
+bool QR_Module::isLocked() const noexcept
 {
 	return locked;
 }
 
-void QR_Module::write_lock(bool w, ModType t)
-{
-	if (!locked) {
-		Color = w;
-		locked = true;
-		type = t;
-	}
-}
-
-void QR_Module::write(bool w, ModType t)
-{
-	if (!locked){
-		Color = w;
-		type = t;
-	}
-}
-
-bool QR_Module::state() const
+bool QR_Module::state() const noexcept
 {
 	return Color;
 }
 
-void QR_Module::unlock()
+void QR_Module::unlock() noexcept
 {
 	locked = false;
 }

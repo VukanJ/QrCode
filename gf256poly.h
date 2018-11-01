@@ -30,8 +30,9 @@ public:
 
 static std::ostream& operator<<(std::ostream& stream, const gf256poly& poly)
 {
-	for (auto& p : poly.poly)
+	for (auto& p : poly.poly){
 		std::cout << p.alpha << '+';
+	}
 	return stream;
 }
 

@@ -81,8 +81,7 @@ namespace{
 			case ':': return 44;
 		}
 		if (isdigit(t)) return t - 48;
-		if (isupper(t))
-			if (isalpha(t)) return t - 55;
+		if (isupper(t) && isalpha(t)) return t - 55;
 		return 36;
 	}
 
@@ -134,4 +133,4 @@ namespace{
 
 } // end anonymous namespace
 
-#endif
+#endif // UTIL_H

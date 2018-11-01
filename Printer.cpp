@@ -7,15 +7,14 @@ void Printer::printAllPatterns(QR_Field& qr_field)
 	// initialize qr_field
 	for (int i = 0; i < info->size; i++)
 		qr_field.push_back(std::vector<QR_Module>(info->size, QR_Module()));
-	// Print Finder Pattern
-	//
+	// Print finder pattern (Large squares)
 	int c = 0;
 	for (int i = 0; i < 7; i++){
 		c = 0;
 		for (byte p = 0x1; c != 7; p <<= 1, c++){
-			qr_field[i][c].write_lock(finder_dat[i] & p ? true : false, ModType::M_FINDER);
-			qr_field[i][c + info->size - 7].write_lock(finder_dat[i] & p ? true : false, ModType::M_FINDER);
-			qr_field[i + info->size - 7][c].write_lock(finder_dat[i] & p ? true : false, ModType::M_FINDER);
+			qr_field[i][c].write_lock(finder_dat[i] & p, ModType::M_FINDER);
+			qr_field[i][c + info->size - 7].write_lock(finder_dat[i] & p, ModType::M_FINDER);
+			qr_field[i + info->size - 7][c].write_lock(finder_dat[i] & p, ModType::M_FINDER);
 		}
 	}
 	c = 0;
