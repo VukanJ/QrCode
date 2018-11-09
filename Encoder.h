@@ -18,6 +18,7 @@ public:
 	Encoder(qrInfo* inf);
 	void getEncoding(const std::string&);
 	void Encode(std::vector<bool>& dataFinal);
+	
 	std::string read;
 private:
 	qrInfo* info;

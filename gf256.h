@@ -12,8 +12,9 @@ public:
 	gf256(int p, bool valinit);
 	gf256 operator+(const gf256&) const;
 	gf256 operator*(const gf256&) const;
-	unsigned short val, power;
 	unsigned short calcExpo(int p); // Used only by setupLog()
+
+	unsigned short val, power;
 };
 
 #ifdef DEBUG_MODE

@@ -19,11 +19,13 @@ private:
 		Byte xex;
 	};
 	void collectLikeTerms();
+
 public:
 	gf256poly();
 	gf256poly(std::vector<Byte>&, bool valinit);
 	void createGenerator(int len);
-	gf256poly operator/(const gf256poly&);
+	gf256poly operator/(const gf256poly&); // Polynomial division
+
 	std::vector<pol> poly;
 	int genOrder;
 };
