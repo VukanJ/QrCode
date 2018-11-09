@@ -19,7 +19,8 @@ namespace po = boost::program_options;
 
 struct init_parameters
 {
-  std::string inputfile;
+  std::vector<std::string> inputfile_buffer, message_buffer;
+  std::string message, inputfile;
   int eclevel;
 
   void parse(int argc, char* argv[]);

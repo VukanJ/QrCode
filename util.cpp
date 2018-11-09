@@ -4,25 +4,35 @@ void init_parameters::parse(int argc, char* argv[]){
     // Loading command line arguments...
     po::options_description desc("Supported options");
     desc.add_options()
-      ("help", "show this list")
-      ("f", po::value<std::string>(&inputfile), "Input file")
-      ("ec", po::value<int>(&eclevel), "EC level");
-    po::positional_options_description pod;
-    pod.add("f", -1);
+      ("help,h", "show this list")
+      ("message,m",  po::value<std::vector<std::string>>(&message_buffer), "Message string")
+      ("file,f",     po::value<std::vector<std::string>>(&inputfile_buffer), "Input file")
+      ("EC-Level,L", po::value<int>(&eclevel)->default_value(1), "EC level");
+
     po::variables_map vm;
-    po::store(po::command_line_parser(argc, argv).options(desc).positional(pod).run(), vm);
+    po::store(po::parse_command_line(argc, argv, desc), vm);
     po::notify(vm);
 
     // Help
     if(vm.count("help")){
       std::cout << desc << '\n';
-      exit(0);
+      exit(EXIT_SUCCESS);
     }
     // Input file
-    if(!vm.count("f")){
-      std::cerr << "\t[Error]: An input file must be specified!\n" << desc << '\n';
-      exit(1);
+    if(message_buffer.empty() && inputfile_buffer.empty()){
+      std::cerr << "[Error]: An input file or message must be specified!\n" << desc << '\n';
+      exit(EXIT_FAILURE);
     }
+	if(!message_buffer.empty() && !inputfile_buffer.empty()){
+      std::cerr << "[Error]: Input file and message cannot be specified simultaneously!\n" << desc << '\n';
+      exit(EXIT_FAILURE);
+    }
+	if(!message_buffer.empty()){
+		message = message_buffer[0];
+	}
+	else if(!inputfile_buffer.empty()){
+		inputfile = inputfile_buffer[0];
+	}
 }
 
 Byte c2alpha(const char t)
@@ -73,6 +83,7 @@ std::ostream& operator<<(std::ostream& stream, const std::vector<T>& vec)
 {
 	if (vec.empty()){
 		stream << "[empty]";
+		return stream;
 	}
 	else {
 		stream << '[';

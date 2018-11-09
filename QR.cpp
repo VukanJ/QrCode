@@ -22,7 +22,7 @@ void QR::reset()
 	dataFinal.clear();
 }
 
-sf::Image QR::create(const std::string& dataFile, Err_Level level)
+sf::Image QR::create(const std::string& dataFile, bool filegiven, Err_Level level)
 {
 	std::cout << "\tGenerating QR-Code ...\n";
 	info.error_level = level;
@@ -36,7 +36,7 @@ sf::Image QR::create(const std::string& dataFile, Err_Level level)
 	}
 	std::cout << "% recovery) ...\n";
 
-	encoder.getEncoding(dataFile);
+	encoder.getEncoding(dataFile, filegiven);
 
 	encoder.Encode(dataFinal);
 	

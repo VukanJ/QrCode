@@ -16,7 +16,7 @@ class Encoder
 public:
 	Encoder() = delete;
 	Encoder(qrInfo* inf);
-	void getEncoding(const std::string&);
+	void getEncoding(const std::string&, bool filegiven);
 	void Encode(std::vector<bool>& dataFinal);
 	
 	std::string read;

@@ -29,7 +29,13 @@ int main(int argc, char* argv[])
 	// Compute QR Code
 	setupLogtable();
 	QR qr;
-	sf::Image qrImage = qr.create(initparams.inputfile, err);
+	sf::Image qrImage;
+	if(initparams.message.empty()){
+		qrImage = qr.create(initparams.inputfile, true, err);
+	}
+	else{
+		qrImage = qr.create(initparams.message, false, err);	
+	}
 	//qr.print();
 	std::cout << "\t~~~~DONE~~~~\n\tPress S to Save\nResize code by resizing window\n";
 	
