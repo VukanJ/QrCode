@@ -16,3 +16,17 @@ Alternatively, the message string can be passed via the command line:
     QRgen -m "This message is stored in the QR Code" -L 4
 
 Press S to save.
+
+# Installation
+### Requirements
+    SFML 2.5
+    Boost
+    cmake
+    make
+### Installation procedure
+    git clone https://github.com/VukanJ/QrCode.git
+    cd QrCode
+    mkdir build 
+    cd build 
+    cmake ..
+    make 
