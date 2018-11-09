@@ -2,7 +2,7 @@
 
 gf256poly::gf256poly(){}
 
-gf256poly::gf256poly(std::vector<byte>& bytes, bool valinit)
+gf256poly::gf256poly(std::vector<Byte>& bytes, bool valinit)
 {
 	genOrder = 0;
 	unsigned int maxex = bytes.size() - 1;
@@ -63,3 +63,12 @@ gf256poly gf256poly::operator/(const gf256poly& generator)
 	}
 	return msg;
 }
+
+#ifdef DEBUG_MODE
+std::ostream& operator<<(std::ostream& stream, const gf256poly& poly)\
+{
+	for (auto& p : poly.poly){
+		std::cout << p.alpha << '+';
+	}
+	return stream;
+#endif

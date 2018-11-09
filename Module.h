@@ -30,4 +30,4 @@ private:
 	bool Color; // true == white
 };
 
-#endif
+#endif // MODULE_H

@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
 				case sf::Event::KeyPressed:
 					switch (ev.key.code){
 						case sf::Keyboard::Escape:window.close(); break;
-						case sf::Keyboard::S:{
+						case sf::Keyboard::S: {
 							// Producing QR output by taking screenshot
 							sf::Texture screenshot_tex;
 							screenshot_tex.update(window);
@@ -65,13 +65,15 @@ int main(int argc, char* argv[])
 						}
 						default: break;
 					} break;
-				case sf::Event::Resized:
+				case sf::Event::Resized: {
 					auto size = std::min(window.getSize().x, window.getSize().y);
 					size -= size%qrSize;
 					size = std::max<int>(size, qrSize);
 					//window.create(sf::VideoMode(800, 600), "My window");
 					//window.setSize(sf::Vector2u(size,size));
 					break;
+				}
+				default : break;
 			}
 		}
 		window.clear(sf::Color::Blue);

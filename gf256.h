@@ -16,10 +16,8 @@ public:
 	unsigned short calcExpo(int p); // Used only by setupLog()
 };
 
-static std::ostream& operator<<(std::ostream& stream, const gf256& gf)
-{
-	printf("[%d,%d]", gf.val, gf.power);
-	return stream;
-}
-
+#ifdef DEBUG_MODE
+std::ostream& operator<<(std::ostream& stream, const gf256& gf);
 #endif
+
+#endif // GF256_H

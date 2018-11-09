@@ -19,4 +19,4 @@ public:
 
 };
 
-#endif
+#endif // EC_H

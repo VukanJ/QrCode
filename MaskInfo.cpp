@@ -244,7 +244,7 @@ void MaskInfo::genFormatInfo()
 	pushBits(GEN, gen, 15);
 
 	if (info->version < 0) return;
-	byte ec = 0x0;
+	Byte ec = 0x0;
 	switch (info->error_level){ // (ordering required by standard)
 		case _L_: ec = 0x1; break;
 		case _M_: ec = 0x0; break; 

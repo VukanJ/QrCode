@@ -11,7 +11,7 @@ void Printer::printAllPatterns(QR_Field& qr_field)
 	int c = 0;
 	for (int i = 0; i < 7; i++){
 		c = 0;
-		for (byte p = 0x1; c != 7; p <<= 1, c++){
+		for (Byte p = 0x1; c != 7; p <<= 1, c++){
 			qr_field[i][c].write_lock(finder_dat[i] & p, ModType::M_FINDER);
 			qr_field[i][c + info->size - 7].write_lock(finder_dat[i] & p, ModType::M_FINDER);
 			qr_field[i + info->size - 7][c].write_lock(finder_dat[i] & p, ModType::M_FINDER);
@@ -33,8 +33,8 @@ void Printer::printAllPatterns(QR_Field& qr_field)
 				if (qr_field[x][y].type == M_VOID)
 					for (auto& p : align_dat){
 						c = 0;
-						for (byte b = (byte)0x1; c != 5; b <<= 1, c++){
-							qr_field[x - 2 + c][y - 2 + d].write_lock(p & b ? true : false, ModType::M_ALIGN);
+						for (Byte b = static_cast<Byte>(0x1); c != 5; b <<= 1, c++){
+							qr_field[x - 2 + c][y - 2 + d].write_lock(static_cast<bool>(p & b), ModType::M_ALIGN);
 						}
 						d++;
 					}
@@ -43,11 +43,9 @@ void Printer::printAllPatterns(QR_Field& qr_field)
 	// Print Timing Pattern
 	bool tim = false;
 	for (int i = 0; i < info->version * 4 + 21; i++){
-		tim = tim ? false : true;
-		if (qr_field[6][i].type == M_VOID)
-			qr_field[6][i].write_lock(tim, M_TIMING);
-		if (qr_field[i][6].type == M_VOID)
-			qr_field[i][6].write_lock(tim, M_TIMING);
+		tim = !tim;
+		if (qr_field[6][i].type == M_VOID) qr_field[6][i].write_lock(tim, M_TIMING);
+		if (qr_field[i][6].type == M_VOID) qr_field[i][6].write_lock(tim, M_TIMING);
 	}
 
 	// Reserve Spaces 

@@ -10,7 +10,7 @@ void EC::ErrorCorrection(std::vector<bool>& dataFinal)
 	for (int j = 0; j < dataFinal.size() / 8; j++){
 		fullMsg.push_back(0x0);
 		for (int i = 0; i < 8; i++)
-			fullMsg.back() |= ((byte)1 & dataFinal[j * 8 + i]) << (7 - i);
+			fullMsg.back() |= ((Byte)1 & dataFinal[j * 8 + i]) << (7 - i);
 	}
 	dataFinal.clear();
 	/*std::cout << "DATA\n";

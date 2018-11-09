@@ -14,10 +14,10 @@ void Encoder::getEncoding(const std::string& fileName)
 	// Set encoding type
 	info->encoding = NUMERIC;
 	for (auto& c : read){
-		if ((c >= 0x8140 && c <= 0x9FFC) || (c >= 0xE040 && c <= 0xEBBF)){ // Does not work this way
-			info->encoding = KANJI;
-			break;
-		}
+		//if ((c >= 0x8140 && c <= 0x9FFC) || (c >= 0xE040 && c <= 0xEBBF)){ // Does not work this way
+		//	info->encoding = KANJI;
+		//	break;
+		//}
 		if (isalpha(c)){
 			if (islower(c)){
 				info->encoding = BYTE_ENC;
@@ -52,7 +52,7 @@ void Encoder::Encode(std::vector<bool>& dataFinal)
 			break;
 		case NUMERIC:
 			std::cout << "Mode: Numeric encoding\n";
-			for_each(std::begin(rawData), std::end(rawData), [](unsigned& c){ c -= 48; });
+			for_each(std::begin(rawData), std::end(rawData), [](unsigned& c){ c -= '0'; });
 			break;
 		case KANJI:
 			std::cout << "Mode: Kanji encoding\n";
@@ -108,7 +108,7 @@ void Encoder::Encode(std::vector<bool>& dataFinal)
 			else if (rawData.size() == 2){
 				encoded[i].len = 7; // See Iso Standard
 				encoded[i].dat += (*it) * 10; it = rawData.erase(it);
-				encoded[i].dat += (*it);    it = rawData.erase(it);
+				encoded[i].dat += (*it);      it = rawData.erase(it);
 				break;
 			}
 			else if (rawData.size() == 1){
@@ -147,11 +147,11 @@ void Encoder::Encode(std::vector<bool>& dataFinal)
 		for (auto it = rawData.begin(); it != rawData.end(); it++){
 			if (*it >= 0x8140 && *it <= 0x9FFC){
 				*it -= 0x8140;
-				encoded.push_back(varNum(((*it >> 8) * 0xC0)*((byte)0xFFFF & *it),13));
+				encoded.push_back(varNum(((*it >> 8) * 0xC0)*(static_cast<Byte>(0xFFFF) & *it), 13));
 			}
 			else if (*it >= 0xE040 && *it <= 0xEBBF){
 				*it -= 0xC140;
-				encoded.push_back(varNum(((*it >> 8) * 0xC0)*((byte)0xFFFF & *it), 13));
+				encoded.push_back(varNum(((*it >> 8) * 0xC0)*(static_cast<Byte>(0xFFFF) & *it), 13));
 			}
 		}
 	}

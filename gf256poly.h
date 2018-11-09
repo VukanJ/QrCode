@@ -13,27 +13,23 @@ private:
 	struct pol
 	{
 		pol() :alpha(0, true), xex(0){};
-		pol(gf256 gf, byte e)
+		pol(gf256 gf, Byte e)
 			:alpha(gf), xex(e){};
 		gf256 alpha;
-		byte xex;
+		Byte xex;
 	};
 	void collectLikeTerms();
 public:
 	gf256poly();
-	gf256poly(std::vector<byte>&, bool valinit);
+	gf256poly(std::vector<Byte>&, bool valinit);
 	void createGenerator(int len);
 	gf256poly operator/(const gf256poly&);
 	std::vector<pol> poly;
 	int genOrder;
 };
 
-static std::ostream& operator<<(std::ostream& stream, const gf256poly& poly)
-{
-	for (auto& p : poly.poly){
-		std::cout << p.alpha << '+';
-	}
-	return stream;
-}
+#ifdef DEBUG_MODE
+std::ostream& operator<<(std::ostream& stream, const gf256poly& poly);
+#endif 
 
-#endif
+#endif // GF256POLY_H

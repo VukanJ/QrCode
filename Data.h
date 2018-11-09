@@ -7,8 +7,8 @@
 #include <array>
 #include <cstdint>
 
-using byte = uint8_t;
-using byteVec = std::vector<byte>;
+using Byte = uint8_t;
+using byteVec = std::vector<Byte>;
 
 enum Encoding{
 	NUMERIC,
@@ -25,7 +25,7 @@ enum Err_Level{
 	_UNDEF_ // Invalid setting
 };
 
-static constexpr std::array<byte, 7> finder_dat = {
+static constexpr std::array<Byte, 7> finder_dat = {
 	0b1111111,
 	0b1000001,
 	0b1011101,
@@ -35,7 +35,7 @@ static constexpr std::array<byte, 7> finder_dat = {
 	0b1111111
 };
 
-static constexpr std::array<byte, 5> align_dat = {
+static constexpr std::array<Byte, 5> align_dat = {
 	0b11111,
 	0b10001,
 	0b10101,
@@ -43,7 +43,7 @@ static constexpr std::array<byte, 5> align_dat = {
 	0b11111
 };
 
-static constexpr std::array<std::array<byte, 4>, 3> indicator_len = {{
+static constexpr std::array<std::array<Byte, 4>, 3> indicator_len = {{
 	{ 10,  9,  8,  8 }, 
 	{ 12, 11, 16, 10 }, 
 	{ 14, 13, 16, 12 } 
@@ -144,7 +144,7 @@ static constexpr std::array<std::array<unsigned, 6>, 160> errorBlockInfo = {{
 	{ 2956, 30, 19, 118, 6, 119 }, { 2334, 28, 18, 47, 31, 48 }, { 1666, 30, 34, 24, 34, 25 }, { 1276, 30, 20, 15, 61, 16 }  // 40
 }};
 
-static const std::vector<std::vector<byte>> alignmentDat = {
+static const std::vector<std::vector<Byte>> alignmentDat = {
 	{ 6, 18 }, { 6, 22 }, { 6, 26 }, { 6, 30 }, { 6, 34 },
 	{ 6, 22, 38 }, { 6, 24, 42 }, { 6, 26, 46 }, { 6, 28, 50 }, { 6, 30, 54 }, { 6, 32, 58 }, { 6, 34, 62 },
 	{ 6, 26, 46, 66 }, { 6, 26, 48, 70 }, { 6, 26, 50, 74 }, { 6, 30, 54, 78 }, { 6, 30, 56, 82 }, { 6, 30, 58, 86 }, { 6, 34, 62, 90 },
@@ -155,4 +155,4 @@ static const std::vector<std::vector<byte>> alignmentDat = {
 
 constexpr std::string_view usageMsg = "Usage: QR <ec-level>\nError Correction-Levels:{ L M Q H }\n";
 
-#endif
+#endif // DATA_H

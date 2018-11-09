@@ -28,4 +28,4 @@ private:
 	qrInfo* info;
 };
 
-#endif
+#endif // MASKINFO_H

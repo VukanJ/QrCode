@@ -1,7 +1,6 @@
 #ifndef ENCODER_H
 #define ENCODER_H
 
-
 #include <iostream>
 #include <fstream>
 #include <streambuf>
@@ -27,5 +26,4 @@ private:
 	varNum count_indicator;
 };
 
-
-#endif
+#endif // ENCODER_H

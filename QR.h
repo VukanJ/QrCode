@@ -18,7 +18,6 @@ public:
 	sf::Image create(const std::string& dataFile, Err_Level);
 	int getVersion();
 	void reset(); // Resets all data
-	void test(sf::RenderWindow&); // Create all 160 different versions
 	void print() const;
 private:
 	Encoder encoder;
@@ -32,4 +31,4 @@ private:
 	sf::Image qrCode;
 };
 
-#endif
+#endif // QR_H

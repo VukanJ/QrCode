@@ -59,3 +59,11 @@ void setupLogtable()
 	log_antilog[0][255] = 1; // ?
 	done = true;
 }
+
+#ifdef DEBUG_MODE
+std::ostream& operator<<(std::ostream& stream, const gf256& gf)
+{
+	printf("[%d,%d]", gf.val, gf.power);
+	return stream;
+}
+#endif

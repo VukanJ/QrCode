@@ -49,11 +49,6 @@ sf::Image QR::create(const std::string& dataFile, Err_Level level)
 	return qrCode;
 }
 
-void QR::test(sf::RenderWindow& window)
-{
- // WIP
-}
-
 void QR::print() const 
 {
 	auto block = "██";

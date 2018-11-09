@@ -21,4 +21,4 @@ private:
 	qrInfo* info;
 };
 
-#endif
+#endif // PRINTER_H

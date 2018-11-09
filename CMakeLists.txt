@@ -16,7 +16,7 @@ find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
 if(SFML_FOUND AND Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
   
-  add_executable(QRgen MaskInfo.cpp Printer.cpp gf256poly.cpp QR.cpp Main.cpp Encoder.cpp Module.cpp gf256.cpp EC.cpp)
+  add_executable(QRgen MaskInfo.cpp Printer.cpp gf256poly.cpp QR.cpp Main.cpp Encoder.cpp Module.cpp gf256.cpp EC.cpp util.cpp)
   set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
   target_link_libraries(QRgen ${Boost_LIBRARIES} sfml-graphics sfml-window sfml-system)
   
