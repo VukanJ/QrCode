@@ -61,7 +61,7 @@ struct qrInfo
 	Encoding encoding;
 };
 
-namespace{
+namespace {
 	byte c2alpha(const char t)
 	{
 		switch (t){
@@ -75,9 +75,9 @@ namespace{
 			case '/': return 43;
 			case ':': return 44;
 		}
-		if (isdigit(t)) return t - 48;
-		if (isupper(t) && isalpha(t)) return t - 55;
-		return 36;
+		if (isdigit(t)) return t - '0';
+		if (isupper(t) && isalpha(t)) return t - 'A' + 10;
+		return ' '; // Invalid character turns to space
 	}
 
 	void printLongBit(std::vector<bool>& vec)
@@ -92,11 +92,12 @@ namespace{
 
 	void pushBits(unsigned data, std::vector<bool>& vec, int amount)
 	{
-		for (unsigned p = 0x1U << (amount - 1); p; p >>= 1)
-			vec.push_back(p & data ? true : false);
+		for (unsigned p = 0x1U << (amount - 1); p; p >>= 1){
+			vec.push_back(static_cast<bool>(p & data));
+		}
 	}
 
-	template<typename C> bool isAlphaNum(C t)
+	template<typename C> bool isAlphaNum(const C t)
 	{
 		if (t > 255) return false;
 		switch (t){
@@ -105,25 +106,40 @@ namespace{
 			case ':': return true;
 		default:
 			if (isdigit(t)) return true;
-			if (isupper(t) && isalpha(t))
-				return true;
-			else return false;
+			return isupper(t) && isalpha(t);
 		}
 	}
 
-	template<typename T> void printBit(T data)
+	template<typename T> void printBit(const T data)
 	{
-		for (T p = (T)0x1 << (sizeof(data) * 8 - 1); p; p >>= 1)
-			std::cout << (p&data ? 1 : 0);
+		for (T p = (T)0x1 << (sizeof(data) * 8 - 1); p; p >>= 1){
+			std::cout << (p & data ? 1 : 0);
+		}
 		std::cout << '\n';
 	}
 
-	std::ostream& operator<<(std::ostream& stream, varNum& num)
+	std::ostream& operator<<(std::ostream& stream, const varNum& num)
 	{
-		for (unsigned short p = (unsigned short)0x1 << (num.len - 1);
-			p; p >>= 1)
-			std::cout << (p&num.dat ? 1 : 0);
+		for (unsigned short p = (unsigned short)0x1 << (num.len - 1); p; p >>= 1){
+			stream << (p & num.dat ? 1 : 0);
+		}
 		return stream;
+	}
+
+	template<typename T>
+	std::ostream& operator<<(std::ostream& stream, const std::vector<T>& vec)
+	{
+		if (vec.empty()){
+			stream << "[empty]";
+		}
+		else {
+			stream << '[';
+			for (const auto& ve : vec){
+				stream << ve << ", ";
+			}
+			stream << "\b\b]";
+			return stream;
+		}
 	}
 
 } // end anonymous namespace

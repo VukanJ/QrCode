@@ -69,7 +69,6 @@ int main(int argc, char* argv[])
 					auto size = std::min(window.getSize().x, window.getSize().y);
 					size -= size%qrSize;
 					size = std::max<int>(size, qrSize);
-					std::cout << "." << std::flush;
 					//window.create(sf::VideoMode(800, 600), "My window");
 					//window.setSize(sf::Vector2u(size,size));
 					break;

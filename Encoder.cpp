@@ -14,7 +14,7 @@ void Encoder::getEncoding(const std::string& fileName)
 	// Set encoding type
 	info->encoding = NUMERIC;
 	for (auto& c : read){
-		if ((c >= 0x8140 && c <= 0x9FFC) || (c >= 0xE040 && c <= 0xEBBF)){
+		if ((c >= 0x8140 && c <= 0x9FFC) || (c >= 0xE040 && c <= 0xEBBF)){ // Does not work this way
 			info->encoding = KANJI;
 			break;
 		}
@@ -48,7 +48,7 @@ void Encoder::Encode(std::vector<bool>& dataFinal)
 			break;
 		case ALPHANUM:
 			std::cout << "Mode: Alphanumeric encoding\n";
-			for_each(std::begin(rawData), std::end(rawData), [](unsigned& c){ c2alpha(c); });
+			for_each(std::begin(rawData), std::end(rawData), [](unsigned& c){ c = c2alpha(c); });
 			break;
 		case NUMERIC:
 			std::cout << "Mode: Numeric encoding\n";
@@ -62,6 +62,7 @@ void Encoder::Encode(std::vector<bool>& dataFinal)
 	// Choose smallest QR Version
 	unsigned short dataSize = rawData.size();
 	std::cout << "Data length: " << dataSize << '\n';
+	
 	int i = 0;
 	while (i < 40 && versionSize[4 * i + info->error_level][info->encoding] < dataSize) i++;
 	if (i >= 40){
@@ -80,7 +81,9 @@ void Encoder::Encode(std::vector<bool>& dataFinal)
 	info->size = 21 + 4 * info->version;
 	std::cout << "Using Version " << info->version + 1;
 	std::printf(" [%d x %d] ...\n", info->size, info->size);
-	count_indicator.dat = dataSize;
+
+	// Assembling indicator bits
+	count_indicator.dat = dataSize; // Save input length bits
 	if (info->version + 1 <= 9){
 		count_indicator.len = indicator_len[0][info->encoding];
 	}
@@ -119,6 +122,7 @@ void Encoder::Encode(std::vector<bool>& dataFinal)
 		std::cout << '\n';*/
 	}
 	else if (info->encoding == ALPHANUM){
+		// Pairs of two characters are encoded as one byte
 		for (auto it = rawData.begin(); it != rawData.end();){
 			encoded.push_back(varNum(0, 11));
 			if (rawData.size() >= 2){
@@ -133,9 +137,7 @@ void Encoder::Encode(std::vector<bool>& dataFinal)
 				it = rawData.erase(it);
 			}
 		}
-		/*for(auto& enc : encoded)
-			std::cout << enc << '\n';
-		std::cout << '\n';*/
+		//std::cout << encoded << '\n';
 	}
 	else if (info->encoding == BYTE_ENC){
 		for (auto it = rawData.begin(); it != rawData.end();it++)

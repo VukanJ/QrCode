@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <array>
 #include <cstdint>
 
 using byte = uint8_t;
@@ -24,7 +25,7 @@ enum Err_Level{
 	_UNDEF_ // Invalid setting
 };
 
-static const byteVec finder_dat = {
+static constexpr std::array<byte, 7> finder_dat = {
 	0b1111111,
 	0b1000001,
 	0b1011101,
@@ -34,7 +35,7 @@ static const byteVec finder_dat = {
 	0b1111111
 };
 
-static const byteVec align_dat = {
+static constexpr std::array<byte, 5> align_dat = {
 	0b11111,
 	0b10001,
 	0b10101,
@@ -42,10 +43,14 @@ static const byteVec align_dat = {
 	0b11111
 };
 
-static const std::vector<byteVec> indicator_len = { { 10, 9, 8, 8 }, { 12, 11, 16, 10 }, { 14, 13, 16, 12 } };
+static constexpr std::array<std::array<byte, 4>, 3> indicator_len = {{
+	{ 10,  9,  8,  8 }, 
+	{ 12, 11, 16, 10 }, 
+	{ 14, 13, 16, 12 } 
+}};
 
 // LMQH
-static const std::vector<std::vector<int>> versionSize = {
+static constexpr std::array<std::array<unsigned, 4>, 160> versionSize = {{
 	// _L_                           ...
 	//{NUMERIC,ALPHANUM,BYTE,KANJI}, ...
 	{ 41, 25, 17, 10 }, { 34, 20, 14, 8 }, { 27, 16, 11, 7 }, { 17, 10, 7, 4 },// VERSION 1
@@ -88,9 +93,9 @@ static const std::vector<std::vector<int>> versionSize = {
 	{ 6479, 3927, 2699, 1661 }, { 5039, 3054, 2099, 1292 }, { 3599, 2181, 1499, 923 }, { 2735, 1658, 1139, 701 },// VERSION 38
 	{ 6743, 4087, 2809, 1729 }, { 5313, 3220, 2213, 1362 }, { 3791, 2298, 1579, 972 }, { 2927, 1774, 1219, 750 },// VERSION 39
 	{ 7089, 4296, 2953, 1817 }, { 5596, 3391, 2331, 1435 }, { 3993, 2420, 1663, 1024 }, { 3057, 1852, 1273, 784 } // VERSION 40
-};
+}};
 
-static const std::vector<std::vector<int>> errorBlockInfo = {
+static constexpr std::array<std::array<unsigned, 6>, 160> errorBlockInfo = {{
 	// # of Codewords,
 	// # of EC Codewords per block
 	// # of blocks in group 1
@@ -137,7 +142,7 @@ static const std::vector<std::vector<int>> errorBlockInfo = {
 	{ 2702, 30, 4, 122, 18, 123 }, { 2102, 28, 13, 46, 32, 47 }, { 1502, 30, 48, 24, 14, 25 }, { 1142, 30, 42, 15, 32, 16 }, // 38
 	{ 2812, 30, 20, 117, 4, 118 }, { 2216, 28, 40, 47, 7, 48 }, { 1582, 30, 43, 24, 22, 25 }, { 1222, 30, 10, 15, 67, 16 }, // 39
 	{ 2956, 30, 19, 118, 6, 119 }, { 2334, 28, 18, 47, 31, 48 }, { 1666, 30, 34, 24, 34, 25 }, { 1276, 30, 20, 15, 61, 16 }  // 40
-};
+}};
 
 static const std::vector<std::vector<byte>> alignmentDat = {
 	{ 6, 18 }, { 6, 22 }, { 6, 26 }, { 6, 30 }, { 6, 34 },
@@ -148,6 +153,6 @@ static const std::vector<std::vector<byte>> alignmentDat = {
 	{ 6, 30, 54, 78, 102, 126, 150 }, { 6, 24, 50, 76, 102, 128, 154 }, { 6, 28, 54, 80, 106, 132, 158 }, { 6, 32, 58, 84, 110, 136, 162 }, { 6, 26, 54, 82, 110, 138, 166 }, { 6, 30, 58, 86, 114, 142, 170 }
 };
 
-const std::string usageMsg ="Usage: QR <ec-level>\nError Correction-Levels:{ L M Q H }\n";
+constexpr std::string_view usageMsg = "Usage: QR <ec-level>\nError Correction-Levels:{ L M Q H }\n";
 
 #endif
