@@ -2,17 +2,11 @@
 
 Encoder::Encoder(qrInfo* inf) :info(inf){}
 
-std::string Encoder::readFile(const std::string& filename)
-{
-	std::ifstream file(filename, std::ios::in);
-	std::string str((std::istreambuf_iterator<char>(file)),
-					  std::istreambuf_iterator<char>());
-	return str;
-}
-
 void Encoder::getEncoding(const std::string& fileName)
 {	
-	read = readFile(fileName);
+	std::ifstream file(fileName, std::ios::in);
+	read = std::string((std::istreambuf_iterator<char>(file)),
+					    std::istreambuf_iterator<char>());
 	std::cout << "Encoding the following information:\n";
 	std::cout << read << '\n';
 

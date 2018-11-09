@@ -21,7 +21,7 @@ enum Err_Level{
 	_M_, // 15% recovery
 	_Q_, // 25% recovery
 	_H_, // 30% recovery
-	_UNDEF_ // Not yet specified
+	_UNDEF_ // Invalid setting
 };
 
 static const byteVec finder_dat = {

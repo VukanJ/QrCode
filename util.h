@@ -41,13 +41,8 @@ struct init_parameters
       std::cerr << "\t[Error]: An input file must be specified!\n" << desc << '\n';
       exit(1);
     }
-    else{
-      std::cout << "Input = " << inputfile << '\n';
-    }
   }
-
 };
-
 
 struct varNum
 {

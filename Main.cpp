@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "QR.h"
+#include "EC.h"
 #include "Data.h"
 #include "gf256.h"
 #include "gf256poly.h"
@@ -21,7 +22,8 @@ int main(int argc, char* argv[])
 		case 2: err = _M_; break;
 		case 3: err = _Q_; break;
 		case 4: err = _H_; break;
-		default: std::cerr << argv[1][0] << " is not a valid ec-level\n" << usageMsg << '\n'; return 1;
+		default: std::cerr << argv[1][0] << " is not a valid ec-level\n" << usageMsg << '\n'; 
+			return 1;
 	}
 	
 	// Compute QR Code
@@ -30,6 +32,7 @@ int main(int argc, char* argv[])
 	sf::Image qrImage = qr.create(initparams.inputfile, err);
 	//qr.print();
 	std::cout << "\t~~~~DONE~~~~\n\tPress S to Save\nResize code by resizing window\n";
+	
 	// SetUp Sprite
 	sf::Texture qrTex;
 	qrTex.loadFromImage(qrImage);
